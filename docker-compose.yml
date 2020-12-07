@@ -5,10 +5,10 @@ services:
     hostname: iim_apache
     build: containers/apache
     ports:
-      - 8080:80
+      - 80:80
       - 443:443
     networks:
-      - iim_lamp
+      - iim-lamp
     volumes:
       - ./src/:/usr/local/apache2/htdocs
       - ./config/:/usr/local/apache2/conf/extra
@@ -17,9 +17,9 @@ services:
     hostname: iim_php
     build: containers/php
     networks:
-      - iim_lamp
+      - iim-lamp
     volumes:
-      - ./src/:/var/www/html
+      - ./src/:/var/www
   mysql:
     container_name: iim_mysql
     hostname: iim_mysql
@@ -29,10 +29,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: pwd
       MYSQL_DATABASE: mydb
-      MYSQL_USER: username
-      MYSQL_PASSWORD: password
+    volumes:
+      - ./db:/var/lib/mysql
     networks:
-      - iim_lamp
+      - iim-lamp
 
 networks:
-  iim_lamp:
+  iim-lamp:
