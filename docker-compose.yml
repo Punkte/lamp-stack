@@ -1,23 +1,37 @@
 version: "3.7"
 services:
-  web:
-    container_name: iim_apache
-    hostname: iim_apache
-    build: containers/apache
+  # web:
+  #   container_name: iim_apache
+  #   hostname: iim_apache
+  #   build: containers/apache
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   networks:
+  #     - iim-lamp
+  #   volumes:
+  #     - ./src/:/usr/local/apache2/htdocs
+  #     - ./config/:/usr/local/apache2/conf/extra
+  nginx:
+    container_name: iim_nginx
+    hostname: iim_nginx
+    image: nginx:1.19
     ports:
       - 80:80
       - 443:443
     networks:
-      - iim-lamp
+      - iim-lemp
     volumes:
-      - ./src/:/usr/local/apache2/htdocs
-      - ./config/:/usr/local/apache2/conf/extra
+      - ./config/nginx/conf.d:/etc/nginx/conf.d
   php:
     container_name: iim_php
     hostname: iim_php
-    build: containers/php
+    build: 
+      context: ./
+      dockerfile: ./containers/php/Dockerfile
     networks:
       - iim-lamp
+      - iim-lemp
     volumes:
       - ./src/:/var/www
   mysql:
@@ -33,6 +47,8 @@ services:
       - ./db:/var/lib/mysql
     networks:
       - iim-lamp
+      - iim-lemp
 
 networks:
   iim-lamp:
+  iim-lemp:

@@ -28,3 +28,20 @@ RUN docker-php-ext-install \
     pdo_mysql \
     exif \
     soap
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+
+
+# WORKDIR /usr/local/apache2/htdocs/elephpant.localhost
+
+# COPY ./src/elephpant.localhost .
+
+# RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+# RUN composer install
+# RUN php artisan key:generate
+# RUN php artisan elephpants:read
+# RUN php artisan storage:link
+
+# COPY ./src/elephpant.localhost/vendor ./vendor
